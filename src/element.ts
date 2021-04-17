@@ -1,3 +1,33 @@
-import { ElInput, ElButton, ElLink } from "element-plus";
-const elementPlugins = [ElInput, ElButton, ElLink];
+import {
+  ElInput,
+  ElButton,
+  ElLink,
+  ElTooltip,
+  ElAlert,
+  ElCollapseTransition,
+  ElMenu,
+  ElMenuItem,
+  ElSubmenu,
+  ElHeader,
+  ElContainer,
+  ElDivider,
+  ElTabs,
+  ElTabPane,
+} from "element-plus";
+const elementPlugins = [
+  ElInput,
+  ElButton,
+  ElLink,
+  ElTooltip,
+  ElAlert,
+  ElCollapseTransition,
+  ElMenu,
+  ElMenuItem,
+  ElSubmenu,
+  ElHeader,
+  ElContainer,
+  ElDivider,
+  ElTabs,
+  ElTabPane,
+];
 export { elementPlugins };

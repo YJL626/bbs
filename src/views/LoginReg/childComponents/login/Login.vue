@@ -1,56 +1,41 @@
 <template>
-  <div class="login-contaier">
-    <div class="box">
-      <el-input v-model="input" placeholder="请输入用户名">
-        <template #prepend>用户名</template>
-      </el-input>
-    </div>
-    <div class="box">
-      <el-input v-model="input" placeholder="请输入密码">
-        <template #prepend>密码</template>
-      </el-input>
-    </div>
-    <div class="captcha-box">
-      <el-input v-model="input" placeholder="请输入验证码">
-        <template #prepend>验证码</template>
-      </el-input>
-      <div
-        class="captcha"
-        @click="captcha.refresh"
-        v-html="captcha.captchaHtml"
-      ></div>
-    </div>
-    <el-button type="primary">立即登录</el-button>
-    <div class="bottom-box">
-      <el-link type="primary" :underline="false">忘记密码？</el-link>
-    </div>
-  </div>
+  <el-tabs type="border-card">
+    <el-tab-pane label="用户管理"><email-login></email-login></el-tab-pane>
+    <el-tab-pane label="p-number-login"
+      ><p-number-login></p-number-login
+    ></el-tab-pane>
+  </el-tabs>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
-import { Captcha } from "@/network/getCaptcha";
+import FormError from "@/views/LoginReg/childComponents/login/FormError.vue";
+import EmailLogin from "@/views/LoginReg/childComponents/login/EmailLogin.vue";
+import PNumberLogin from "@/views/LoginReg/childComponents/login/PNumberLogin.vue";
 
 export default defineComponent({
   name: "Login",
-  setup() {
-    const value = ref("10000");
-    const captcha = reactive(new Captcha());
-    captcha.init();
-    return { value, captcha };
-  },
-  components: {},
+  setup() {},
+  components: { FormError, EmailLogin, PNumberLogin },
 });
 </script>
 
 <style lang="scss" scope>
+.el-tabs {
+  max-width: 900px;
+  margin: 0 auto;
+}
 .login-contaier {
   max-width: 80%;
   min-width: 350px;
   margin: 0 auto;
+  .el-alert {
+    max-width: 350px;
+  }
   .box {
     min-width: 350px;
     margin-bottom: 12px;
+
     .el-input-group__prepend {
       box-sizing: border-box;
       color: rgb(56, 55, 55);
@@ -59,6 +44,9 @@ export default defineComponent({
     .el-input__inner {
       margin: 0;
       max-width: 240px;
+    }
+    .el-alert {
+      margin-top: 5px;
     }
   }
   .captcha-box {
@@ -92,6 +80,7 @@ export default defineComponent({
   }
   .bottom-box {
     width: 350px;
+    overflow: hidden;
     & > :nth-last-child(1) {
       float: right;
       line-height: 40px;
