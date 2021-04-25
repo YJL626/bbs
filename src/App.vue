@@ -19,11 +19,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scope>
-
 body .el-divider {
   margin: 0;
+  margin-bottom: 10px;
 }
-.content{
+.content {
   max-width: 1366px;
   margin: 0 auto;
 }

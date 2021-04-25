@@ -1,12 +1,16 @@
 <template>
   <div id="header">
     <el-header>
-      <img class="logo" src="@/assets/logo.png" alt="" />
+      <img
+        class="logo"
+        src="@/assets/logo.png"
+        alt=""
+        @click="routerGo('login')"
+      />
       <el-menu
-        :default-active="1"
+        default-active="1"
         class="el-menu-demo"
         mode="horizontal"
-        @select="handleSelect"
         text-color="#303133"
       >
         <el-menu-item index="1">论坛</el-menu-item>
@@ -14,32 +18,35 @@
         <el-menu-item index="3">黑名单</el-menu-item>
         <el-submenu index="4">
           <template #title>其他</template>
-          <el-menu-item index="4-1">选项1</el-menu-item>
-          <el-menu-item index="4-2">选项2</el-menu-item>
-          <el-menu-item index="4-3">选项3</el-menu-item>
-          <el-submenu index="4-4">
-            <template #title>选项4</template>
-            <el-menu-item index="4-4-1">选项1</el-menu-item>
-            <el-menu-item index="4-4-2">选项2</el-menu-item>
-            <el-menu-item index="4-4-3">选项3</el-menu-item>
-          </el-submenu>
+          <el-menu-item index="4-1" @click="routerGo('login')"
+            >登录</el-menu-item
+          >
+          <el-menu-item index="4-2" @click="routerGo('register')"
+            >注册</el-menu-item
+          >
+          <el-menu-item index="4-3">其他</el-menu-item>
         </el-submenu>
       </el-menu>
       <div class="login-reg">
-        <p><router-link :to="{ name: 'login' }">111</router-link></p>
-        <p><router-link :to="{ name: 'register' }">regiter</router-link></p>
+        <p class="router-link" @click="routerGo('login')">登录</p>
+        <p class="router-link" @click="routerGo('register')">注册</p>
       </div>
     </el-header>
   </div>
 </template>
 
 <script lang="ts">
+import { useRouter } from "vue-router";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "",
+  name: "NavHeader",
   setup() {
-    return {};
+    const router = useRouter();
+    const routerGo = (routerName: string) => {
+      router.push({ name: routerName });
+    };
+    return { routerGo };
   },
   components: {},
 });
@@ -76,12 +83,7 @@ export default defineComponent({
       }
     }
     .login-reg {
-      display: flex;
-      margin-right: 15px;
-      p {
-        margin: 0 10px;
-        line-height: 84px;
-      }
+      display: none;
     }
     @media screen and (min-width: 768px) {
       display: flex;
@@ -89,6 +91,14 @@ export default defineComponent({
       height: 84px !important;
       .logo {
         display: block;
+      }
+      .login-reg {
+        display: flex;
+        margin-right: 15px;
+        p {
+          margin: 0 10px;
+          line-height: 84px;
+        }
       }
     }
   }
