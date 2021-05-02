@@ -1,8 +1,6 @@
-import { useVuelidate } from "@vuelidate/core";
 import { helpers } from "@vuelidate/validators";
-import { reactive, toRef } from "vue-demi";
 
-import { email, required, minLength, maxLength } from "@/utils/validators";
+import { email, required } from "@/utils/validators";
 import { Captcha } from "@/network/getCaptcha";
 class ForgetFormState {
   email = "";

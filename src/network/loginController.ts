@@ -1,6 +1,6 @@
 import { loginState } from "@/type";
 import { mAxios } from ".";
-import { noop, result } from "lodash";
+import { noop } from "lodash";
 
 class LoginController {
   protected _state: loginState = loginState.none;
@@ -15,12 +15,12 @@ class LoginController {
     {
       success = noop,
       err = noop,
-    }: { success?: (token: string) => any; err?: Function }
+    }: { success?: (token: string) => any; err?: () => any }
   ) {
     const token = await mAxios
       .post("/login/email", loginForm)
       .then((data: any) => data.token as string)
-      .catch((err) => "");
+      .catch(() => "");
     if (token) {
       this._state = loginState.success;
       success(token);

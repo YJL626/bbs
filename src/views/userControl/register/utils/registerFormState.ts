@@ -8,7 +8,7 @@ import {
   checkMailboxExist,
   checkUserNameExist,
 } from "@/utils/validators";
-import { reactive, Ref, toRef } from "vue-demi";
+import { reactive } from "vue-demi";
 import { Captcha } from "@/network/getCaptcha";
 import { helpers } from "@vuelidate/validators";
 import useVuelidate, { Validation } from "@vuelidate/core";

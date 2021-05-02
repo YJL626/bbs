@@ -20,8 +20,9 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable vue/no-setup-props-destructure */
 import { Validation } from "@vuelidate/core";
-import { defineComponent, Ref, ref, toRef, watch } from "vue";
+import { defineComponent, ref, toRef, watch } from "vue";
 import { debounce } from "lodash";
 export default defineComponent({
   name: "myInput",

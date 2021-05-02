@@ -68,7 +68,7 @@ export default defineComponent({
       };
       //login的回调
       const loginCbs = {
-        success(token: string) {
+        success(tokena: any) {
           router.push({
             name: "jumpTo",
             query: {
@@ -77,7 +77,7 @@ export default defineComponent({
               targetRouteName: "login",
             },
           });
-          store.commit(SET_TOKEN, token);
+          store.commit(SET_TOKEN, tokena);
         },
         err() {
           isShowPasswordErr.value = true;

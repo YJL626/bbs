@@ -1,6 +1,5 @@
-import { loginState } from "@/type";
 import { mAxios } from ".";
-import { noop, result } from "lodash";
+import { noop } from "lodash";
 import { registerState } from "@/type";
 class RegisterController {
   protected _state: registerState = registerState.none;
@@ -14,13 +13,17 @@ class RegisterController {
       nickName: string;
       name: string;
     },
-    { success = noop, err = noop }: { success?: Function; err?: Function }
+    {
+      success = noop,
+      err = noop,
+    }: { success?: (result?: string) => void; err?: () => void }
   ) {
     //标记状态
     this._state = registerState.pending;
     const result = await mAxios
-      .post("/register", registerForm)
-      .catch((err) => "");
+      .post<string>("/register", registerForm)
+      .then((result) => result.data)
+      .catch(() => "");
     if (result) {
       this._state = registerState.success;
       success(result);

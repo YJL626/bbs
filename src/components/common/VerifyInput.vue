@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, toRef, ref, watch } from "vue";
+import { defineComponent, toRef, ref, watch } from "vue";
 import { Captcha } from "@/network/getCaptcha";
 import { Validation } from "@vuelidate/core";
 import { debounce } from "lodash";
@@ -42,6 +42,7 @@ export default defineComponent({
     property: { type: String, default: "1" },
     captcha: { type: Object },
   },
+  // eslint-disable-next-line vue/no-setup-props-destructure
   setup({ captcha, v, formStates, property }) {
     const captchaDate = captcha as Captcha;
     const v$ = v as Validation;

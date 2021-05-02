@@ -24,7 +24,7 @@ export default defineComponent({
     subTitle: { type: String, default: "" },
     icon: { type: String, default: "success" },
   },
-  setup({ targetRouteName }) {
+  setup(props) {
     //自动跳转
     const router = useRouter();
     const route = useRoute();
@@ -32,7 +32,7 @@ export default defineComponent({
       setTimeout(() => {
         //用户手动跳转,取消自动自动跳转
         if (route.name !== "jumpTo") return;
-        router.push({ name: targetRouteName });
+        router.push({ name: props.targetRouteName });
       }, 5100);
     });
     return {};

@@ -1,4 +1,4 @@
-import { reactive, watch } from "vue-demi";
+import { reactive } from "vue-demi";
 import { mAxios } from ".";
 class Captcha {
   captchaHtml = "<svg></svg>";
