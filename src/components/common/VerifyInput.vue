@@ -71,7 +71,7 @@ export default defineComponent({
 
   .verify-container {
     display: flex;
-    margin-bottom: 1 px;
+    
     .el-input {
       overflow: hidden;
       .el-input-group__prepend {
@@ -93,9 +93,9 @@ export default defineComponent({
 }
 .el-alert {
   height: 20px;
-  margin-bottom: 1px;
   font-size: 5px;
   justify-content: center;
+  margin: 0;
   p {
     margin: 0;
     width: 100%;

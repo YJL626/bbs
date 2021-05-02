@@ -1,7 +1,7 @@
 import { reactive, watch } from 'vue-demi'
-import { mAxios } from './request'
+import { mAxios } from '.'
 class Captcha {
-  captchaHtml = ''
+  captchaHtml = '<svg></svg>'
   captchaValue = ''
   formState = ''
   constructor() {
@@ -10,15 +10,16 @@ class Captcha {
     return reactiveThis
   }
   async refresh() {
-    const captchaData: { data: string; text: string } = await mAxios.get(
-      '/captcha'
-    )
-    this.captchaHtml = captchaData.data
-    this.captchaValue = captchaData.text
+    const captchaData: {
+      data: string
+      text: string
+    } = await mAxios.get('/captcha')
+
+    this.captchaHtml = captchaData.data || this.captchaHtml
+    this.captchaValue = captchaData.text || this.captchaValue
   }
   init() {
     this.refresh()
-
     return this
   }
 }

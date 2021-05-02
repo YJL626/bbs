@@ -1,5 +1,8 @@
 <template>
-  <div class="login-contaier">
+  <form class="login-contaier">
+    <p class="password-err" v-if="isShowPasswordErr">
+      用户名或密码错误请重试
+    </p>
     <my-input
       title="登录邮箱"
       errorTittle="邮箱名错误"
@@ -22,76 +25,126 @@
       :v="loginV$.captcha"
       :captcha="loginFormState.captchaInfo"
     />
-    <el-button
-      type="primary"
-      @click="submit"
-      v-on:keyup.delete="submit"
+    <el-button type="primary" @click="submit" v-on:keyup.delete="submit"
       >立即登录</el-button
     >
     <a
       class="forget-password router-link"
-      @click="routerPush('forgetPassword')"
+      @click="router.push({ name: 'forgetPassword' })"
       >忘记密码？</a
     >
-  </div>
+  </form>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+
+import VerifyInput from '@/components/common/VerifyInput.vue'
+import myInput from '@/components/userControlInput/MyInput.vue'
+
+import { loginController } from '@/network/loginController'
 import {
   loginV$,
   loginFormState,
 } from '@/views/userControl/login/utils/loginFormState'
-import { routerPush } from '@/utils/utils'
-import myInput from '@/components/userControlInput/MyInput.vue'
-
-import VerifyInput from '@/components/VerifyInput.vue'
+import { SET_TOKEN } from '@/store/constant'
 
 export default defineComponent({
   name: 'EmailLogin',
   setup() {
+    const store = useStore()
+    const router = useRouter()
+    const isShowPasswordErr = ref(false)
     const submit = () => {
+      //激活touch进行检测
       loginV$.value.$touch()
+      //不符合条件return
       if (loginV$.value.$error) return
-      console.log(loginFormState)
+      //提取整合表单数据
+      const loginForm = {
+        email: loginFormState.loginEmail,
+        pwd: loginFormState.password,
+      }
+      //login的回调
+      const loginCbs = {
+        success(token: string) {
+          router.push({
+            name: 'jumpTo',
+            query: {
+              icon: 'success',
+              title: '注册成功',
+              targetRouteName: 'login',
+            },
+          })
+
+          store.commit(SET_TOKEN, token)
+        },
+        err() {
+          isShowPasswordErr.value = true
+          setTimeout(() => {
+            isShowPasswordErr.value = false
+            loginController.clearState()
+          }, 8000)
+        },
+      }
+      loginController.emailLogin(loginForm, loginCbs)
     }
-    return { loginFormState, loginV$, routerPush, submit }
+
+    return {
+      loginFormState,
+      loginV$,
+      router,
+      loginController,
+      isShowPasswordErr,
+      submit,
+      store,
+    }
   },
   components: { myInput, VerifyInput },
+  methods: {},
 })
 </script>
 
 <style lang="scss" scope>
+@import '@/scss/variable.scss';
 .el-tabs {
   max-width: 900px;
   margin: 0 auto;
 }
 .login-contaier {
   width: 318px;
-  margin: 0 auto;
+  margin: 20px auto 0 auto;
+  position: relative;
 
   .el-alert {
     padding: 8px 15px !important;
     width: 318px;
   }
+  .password-err {
+    position: absolute;
+    top: -20px;
+    margin: 0;
+    z-index: 1;
+    color: $danger-color;
+    text-align: center;
+    width: 100%;
+    font-size: $supplementaryText;
+  }
   .box {
-    margin-bottom: 12px;
     .el-input-group__prepend {
       box-sizing: border-box;
-      color: rgb(56, 55, 55);
       width: 110px;
     }
     .el-input__inner {
       margin: 0;
       max-width: 240px;
     }
-    .el-alert {
-      margin-top: 5px;
-    }
   }
   .captcha-box {
     min-width: 300px;
-    margin-bottom: 12px;
+
     .el-input-group__prepend {
       box-sizing: border-box;
       color: rgb(56, 55, 55);

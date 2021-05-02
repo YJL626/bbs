@@ -2,7 +2,7 @@
   <div class="my-input-container">
     <el-input
       :placeholder="placeholder"
-      v-model.lazy="formState"
+      v-model="formState"
       :show-password="password"
       @blur="v.$touch"
     >
@@ -32,7 +32,6 @@ export default defineComponent({
     placeholder: { type: String, default: '请输入内容' },
     password: { type: Boolean, default: false },
     title: { type: String, default: 'input err' },
-    errorTittle: { type: String, default: '错误' },
   },
   setup({ formStates, property, v }) {
     const formState = toRef(formStates, property as never)
@@ -47,8 +46,7 @@ export default defineComponent({
     )
     watch(
       () => v$.$errors,
-      () =>
-        v$.$error ? setErrMsg(v$.$errors[0].$message) : setErrMsg('')
+      () => (v$.$error ? setErrMsg(v$.$errors[0].$message) : setErrMsg(''))
     )
     return { formState, errMessage }
   },

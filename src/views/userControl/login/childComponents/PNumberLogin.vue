@@ -1,5 +1,5 @@
-<template >
-| 建设中
+<template>
+  | 建设中
 </template>
 
 <script lang="ts">

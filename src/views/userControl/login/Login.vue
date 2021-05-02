@@ -2,9 +2,7 @@
   <div class="login-reg-container">
     <div class="login-header">
       <span>登录</span>
-      <router-link :to="{ name: 'register' }"
-        >没有账号立即注册？</router-link
-      >
+      <router-link :to="{ name: 'register' }">没有账号立即注册？</router-link>
       <el-divider></el-divider>
     </div>
     <el-tabs type="border-card">
@@ -36,7 +34,7 @@ export default defineComponent({
 .login-reg-container {
   background: #fff;
   padding: 5px;
-  min-height: 60vh;
+  min-height: 80vh;
   .el-tabs {
     min-height: 400px;
   }
