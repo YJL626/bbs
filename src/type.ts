@@ -1,10 +1,6 @@
-import { Ref } from 'vue-demi'
+import { Ref } from "vue-demi";
 
-type emit = (event: string, ...args: unknown[]) => void
-type formState = {
-  state: string //接受$v model属性的映射
-  errMessage: string
-}
+type unRef<T> = T extends Ref<any> ? any : T;
 enum loginState {
   none,
   err,
@@ -13,11 +9,12 @@ enum loginState {
 
 enum registerState {
   none,
+  pending,
   err,
   success,
 }
 type storeState = {
-  token: string
-  [name: string]: any
-}
-export { loginState, storeState, registerState }
+  token: string;
+  [name: string]: any;
+};
+export { loginState, storeState, registerState, unRef };

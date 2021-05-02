@@ -1,26 +1,34 @@
-import { reactive, watch } from 'vue-demi'
-import { mAxios } from '.'
+import { reactive, watch } from "vue-demi";
+import { mAxios } from ".";
 class Captcha {
-  captchaHtml = '<svg></svg>'
-  captchaValue = ''
-  formState = ''
+  captchaHtml = "<svg></svg>";
+  captchaValue = "";
+  isAutoRefresh = false;
   constructor() {
     //通过响应式的对象来更新数据
-    const reactiveThis = reactive(this)
-    return reactiveThis
+    const reactiveThis = reactive(this);
+    return reactiveThis;
   }
   async refresh() {
     const captchaData: {
-      data: string
-      text: string
-    } = await mAxios.get('/captcha')
-
-    this.captchaHtml = captchaData.data || this.captchaHtml
-    this.captchaValue = captchaData.text || this.captchaValue
+      data: string;
+      text: string;
+    } = await mAxios.get("/captcha");
+    this.captchaHtml = captchaData.data || this.captchaHtml;
+    this.captchaValue = captchaData.text || this.captchaValue;
   }
   init() {
-    this.refresh()
-    return this
+    this.refresh();
+    this.autoRefresh();
+    return this;
+  }
+  autoRefresh(intervalMs = 1000 * 60 * 15) {
+    if (!this.isAutoRefresh) {
+      this.isAutoRefresh = true;
+      setTimeout(() => {
+        this.refresh();
+      }, intervalMs);
+    }
   }
 }
-export { Captcha }
+export { Captcha };

@@ -15,7 +15,8 @@ import {
   ElTabPane,
   ElMessage,
   ElResult,
-} from 'element-plus'
+  ElDialog,
+} from "element-plus";
 const elementPlugins = [
   ElInput,
   ElButton,
@@ -33,5 +34,6 @@ const elementPlugins = [
   ElTabPane,
   ElMessage,
   ElResult,
-]
-export { elementPlugins }
+  ElDialog,
+];
+export { elementPlugins };

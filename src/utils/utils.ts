@@ -1,2 +1,2 @@
-const noop = () => undefined
-export { noop }
+const noop = () => undefined;
+export { noop };

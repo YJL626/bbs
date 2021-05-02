@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 function resolve(src) {
   return path.resolve(__dirname, src);

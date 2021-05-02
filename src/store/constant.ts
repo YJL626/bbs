@@ -1,2 +1,2 @@
-const SET_TOKEN = 'setToken'
-export { SET_TOKEN }
+const SET_TOKEN = "setToken";
+export { SET_TOKEN };

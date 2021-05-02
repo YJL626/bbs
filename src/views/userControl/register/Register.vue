@@ -8,7 +8,7 @@
     <el-tabs type="border-card">
       <el-tab-pane label="注册">
         <div class="input-container">
-          <p class="err-msg" v-show="showErrMsg">
+          <p class="err-msg" v-show="showRegisterErrMsg">
             注册失败,请更改用户名,邮箱后重试
           </p>
           <my-input
@@ -67,46 +67,61 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import myInput from '@/components/userControlInput/MyInput.vue'
-import VerifyInput from '@/components/common/VerifyInput.vue'
-import { registerFormState, v$ } from './utils/registerFormState'
-import { RegisterController } from '@/network/registerController'
+import { defineComponent, ref } from "vue";
+import myInput from "@/components/userControlInput/MyInput.vue";
+import VerifyInput from "@/components/common/VerifyInput.vue";
+import { RegisterFormState } from "./utils/registerFormState";
+import { RegisterController } from "@/network/registerController";
+import { useRouter } from "vue-router";
+import { registerState } from "@/type";
 export default defineComponent({
-  name: 'Register',
+  name: "Register",
   setup() {
-    const registerController = new RegisterController()
-    const showErrMsg = ref(false)
+    const registerController = new RegisterController();
+    const showRegisterErrMsg = ref(false);
+    const registerFormState = new RegisterFormState();
+    const v$ = registerFormState.v$;
+    const router = useRouter();
     const submit = () => {
-      v$.value.$touch()
-      if (v$.value.$error) return
-      console.log(registerFormState)
+      //pending正在进行的请求则忽略
+      if (registerController.state === registerState.pending) return;
+      v$.$touch();
+      if (v$.$error) return;
+      console.log(registerFormState);
       const registerForm = {
         name: registerFormState.userName,
         nickName: registerFormState.nickName,
         email: registerFormState.email,
         pwd: registerFormState.email,
-      }
+      };
       const cbs = {
         success: () => {
-          console.log('haha')
+          router.push({
+            name: "jumpTo",
+            query: {
+              icon: "success",
+              title: "注册邮件以发送,请打开邮件进行注册",
+              subTitle: "将在五秒后跳转后登录页面",
+              targetRouteName: "login",
+            },
+          });
         },
         err() {
-          console.log('err')
-          showErrMsg.value = true
-          setTimeout(() => (showErrMsg.value = false), 8000)
+          console.log("err");
+          showRegisterErrMsg.value = true;
+          setTimeout(() => (showRegisterErrMsg.value = false), 8000);
         },
-      }
-      registerController.register(registerForm, cbs)
-    }
-    return { registerFormState, v$, submit, showErrMsg }
+      };
+      registerController.register(registerForm, cbs);
+    };
+    return { registerFormState, v$, submit, showRegisterErrMsg };
   },
   components: { myInput, VerifyInput },
-})
+});
 </script>
 
 <style lang="scss" scope>
-@import '@/scss/variable.scss';
+@import "@/scss/variable.scss";
 .register-container {
   background-color: #fff;
   padding: 5px;
@@ -146,7 +161,6 @@ export default defineComponent({
         font-size: $bodySmall;
         color: $danger-color;
         text-align: center;
-        
       }
     }
     .el-tab-pane {

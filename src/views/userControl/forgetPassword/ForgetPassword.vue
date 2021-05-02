@@ -31,28 +31,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
-import myInput from '@/components/userControlInput/MyInput.vue'
-import VerifyInput from '@/components/common/VerifyInput.vue'
+import myInput from "@/components/userControlInput/MyInput.vue";
+import VerifyInput from "@/components/common/VerifyInput.vue";
 
-import { forgetFormState, forgetV$ } from './utils/forgetFormState'
-import { debounce } from 'lodash'
+import { ForgetFormState } from "./utils/forgetFormState";
+import { debounce } from "lodash";
 
 export default defineComponent({
-  name: 'ForgetPassword',
+  name: "ForgetPassword",
   setup() {
+    const forgetFormState = new ForgetFormState();
     const submit = debounce(
       () => {
-        console.log(forgetFormState)
+        console.log(forgetFormState);
       },
       400,
       { trailing: true }
-    )
-    return { forgetFormState, forgetV$, submit }
+    );
+    return { forgetFormState, submit };
   },
   components: { myInput, VerifyInput },
-})
+});
 </script>
 
 <style lang="scss" scope>
