@@ -5,8 +5,8 @@ bbs
 - [x] register
   - [x] check mailbox
   - [x] check userName
-  - [ ] register Email confirm
-  - [ ] register email send success page
+  - [x] register Email confirm
+  - [x] register email send success page
 
 * [x] login
 * [ ] change password

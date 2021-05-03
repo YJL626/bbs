@@ -16,7 +16,7 @@ import {
   ElMessage,
   ElResult,
   ElDialog,
-} from "element-plus";
+} from 'element-plus'
 const elementPlugins = [
   ElInput,
   ElButton,
@@ -35,5 +35,5 @@ const elementPlugins = [
   ElMessage,
   ElResult,
   ElDialog,
-];
-export { elementPlugins };
+]
+export { elementPlugins }

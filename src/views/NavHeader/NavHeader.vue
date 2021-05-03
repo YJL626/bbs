@@ -36,20 +36,20 @@
 </template>
 
 <script lang="ts">
-import { useRouter } from "vue-router";
-import { defineComponent } from "vue";
+import { useRouter } from 'vue-router'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: "NavHeader",
+  name: 'NavHeader',
   setup() {
-    const router = useRouter();
+    const router = useRouter()
     const routerGo = (routerName: string) => {
-      router.push({ name: routerName });
-    };
-    return { routerGo };
+      router.push({ name: routerName })
+    }
+    return { routerGo }
   },
   components: {},
-});
+})
 </script>
 
 <style lang="scss" scope>

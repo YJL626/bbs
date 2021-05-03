@@ -7,15 +7,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import NavHeader from "@/views/NavHeader/NavHeader.vue";
+import { defineComponent } from 'vue'
+import NavHeader from '@/views/NavHeader/NavHeader.vue'
 export default defineComponent({
-  name: "App",
+  name: 'App',
   setup() {
-    return {};
+    return {}
   },
   components: { NavHeader },
-});
+})
 </script>
 
 <style lang="scss" scope>

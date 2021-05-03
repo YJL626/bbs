@@ -35,78 +35,77 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { defineComponent, ref } from 'vue'
+import { useStore } from 'vuex'
+import { RouteLocationRaw, useRouter } from 'vue-router'
 
-import VerifyInput from "@/components/common/VerifyInput.vue";
-import myInput from "@/components/userControlInput/MyInput.vue";
+import VerifyInput from '@/components/common/VerifyInput.vue'
+import myInput from '@/components/userControlInput/MyInput.vue'
 
-import { loginController } from "@/network/loginController";
-import { LoginFormState } from "@/views/userControl/login/utils/loginFormState";
-import { SET_TOKEN } from "@/store/constant";
-import useVuelidate from "@vuelidate/core";
+import { LoginController } from '@/network/loginController'
+import { LoginFormState } from '@/views/userControl/login/utils/loginFormState'
+import { SET_TOKEN } from '@/store/constant'
+import useVuelidate from '@vuelidate/core'
 
 export default defineComponent({
-  name: "EmailLogin",
+  name: 'EmailLogin',
   setup() {
-    const store = useStore();
-    const router = useRouter();
-    const isShowPasswordErr = ref(false);
-    const loginFormState = new LoginFormState();
-    const loginV$ = useVuelidate(loginFormState.rules, loginFormState);
-    store.commit(SET_TOKEN, "5505");
+    const store = useStore()
+    const router = useRouter()
+    const isShowPasswordErr = ref(false)
+    const loginFormState = new LoginFormState()
+    const loginV$ = useVuelidate(loginFormState.rules, loginFormState)
+    store.commit(SET_TOKEN, '5505')
     const submit = () => {
       //激活touch进行检测
-      loginV$.value.$touch();
+      loginV$.value.$touch()
       //不符合条件return
-      if (loginV$.value.$error) return;
+      if (loginV$.value.$error) return
       //提取整合表单数据
       const loginForm = {
         email: loginFormState.loginEmail,
         pwd: loginFormState.password,
-      };
+      }
       //login的回调
       const loginCbs = {
         success(tokena: any) {
-          router.push({
-            name: "jumpTo",
+          const target: RouteLocationRaw = {
+            name: 'jumpTo',
             query: {
-              icon: "success",
-              title: "登录成功",
-              targetRouteName: "login",
+              icon: 'success',
+              title: '登录成功',
+              targetRouteName: 'login',
             },
-          });
-          store.commit(SET_TOKEN, tokena);
+          }
+          router.push(target)
+          store.commit(SET_TOKEN, tokena)
         },
         err() {
-          isShowPasswordErr.value = true;
+          isShowPasswordErr.value = true
           setTimeout(() => {
-            isShowPasswordErr.value = false;
-            loginController.clearState();
-          }, 8000);
+            isShowPasswordErr.value = false
+          }, 8000)
         },
-      };
-      loginController.emailLogin(loginForm, loginCbs);
-    };
+      }
+      new LoginController().emailLogin(loginForm, loginCbs)
+    }
 
     return {
       loginFormState,
       loginV$,
       router,
-      loginController,
       isShowPasswordErr,
       submit,
       store,
-    };
+    }
   },
   components: { myInput, VerifyInput },
   methods: {},
-});
+})
 </script>
 
 <style lang="scss" scope>
-@import "@/scss/variable.scss";
+@import '@/scss/variable.scss';
 .el-tabs {
   max-width: 900px;
   margin: 0 auto;

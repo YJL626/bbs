@@ -1,15 +1,15 @@
 <template>| 建设中</template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: "PNumerLogin",
+  name: 'PNumerLogin',
   setup() {
-    return {};
+    return {}
   },
   components: {},
-});
+})
 </script>
 
 <style lang="scss" scope></style>

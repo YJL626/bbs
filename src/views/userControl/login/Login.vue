@@ -17,17 +17,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import EmailLogin from "@/views/userControl/login/childComponents/EmailLogin.vue";
-import PNumberLogin from "@/views/userControl/login/childComponents/PNumberLogin.vue";
+import { defineComponent } from 'vue'
+import EmailLogin from '@/views/userControl/login/childComponents/EmailLogin.vue'
+import PNumberLogin from '@/views/userControl/login/childComponents/PNumberLogin.vue'
 
 export default defineComponent({
-  name: "login",
+  name: 'login',
   setup() {
-    return {};
+    return {}
   },
   components: { EmailLogin, PNumberLogin },
-});
+})
 </script>
 
 <style lang="scss" scope>

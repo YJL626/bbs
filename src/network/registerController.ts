@@ -1,17 +1,17 @@
-import { mAxios } from ".";
-import { noop } from "lodash";
-import { registerState } from "@/type";
+import { mAxios } from '.'
+import { noop } from 'lodash'
+import { registerState } from '@/type'
 class RegisterController {
-  protected _state: registerState = registerState.none;
+  protected _state: registerState = registerState.none
   get state() {
-    return this._state;
+    return this._state
   }
   async register(
     registerForm: {
-      email: string;
-      pwd: string;
-      nickName: string;
-      name: string;
+      email: string
+      pwd: string
+      nickName: string
+      name: string
     },
     {
       success = noop,
@@ -19,22 +19,22 @@ class RegisterController {
     }: { success?: (result?: string) => void; err?: () => void }
   ) {
     //标记状态
-    this._state = registerState.pending;
+    this._state = registerState.pending
     const result = await mAxios
-      .post<string>("/register", registerForm)
+      .post<string>('/register', registerForm)
       .then((result) => result.data)
-      .catch(() => "");
+      .catch(() => '')
     if (result) {
-      this._state = registerState.success;
-      success(result);
+      this._state = registerState.success
+      success(result)
     } else {
-      this._state = registerState.err;
-      err();
+      this._state = registerState.err
+      err()
     }
   }
   clearState() {
-    this._state = registerState.none;
+    this._state = registerState.none
   }
 }
 
-export { RegisterController };
+export { RegisterController }

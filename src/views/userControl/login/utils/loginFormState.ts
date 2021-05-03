@@ -1,16 +1,16 @@
-import { useVuelidate, Validation } from "@vuelidate/core";
-import { helpers } from "@vuelidate/validators";
-import { reactive } from "vue-demi";
+import { useVuelidate, Validation } from '@vuelidate/core'
+import { helpers } from '@vuelidate/validators'
+import { reactive } from 'vue-demi'
 
-import { email, required, minLength, maxLength } from "@/utils/validators";
-import { Captcha } from "@/network/getCaptcha";
+import { email, required, minLength, maxLength } from '@/utils/validators'
+import { Captcha } from '@/network/getCaptcha'
 
 class LoginFormState {
-  loginEmail = "";
-  password = "";
-  captcha = "";
-  captchaInfo = new Captcha().init();
-  $v: Validation<LoginFormState["rules"], LoginFormState>;
+  loginEmail = ''
+  password = ''
+  captcha = ''
+  captchaInfo = new Captcha().init()
+  $v: Validation<LoginFormState['rules'], LoginFormState>
   rules = {
     loginEmail: { required, email },
     password: {
@@ -21,22 +21,20 @@ class LoginFormState {
     captcha: {
       required,
       isSame: helpers.withMessage(
-        "验证码错误",
+        '验证码错误',
         (value: any) =>
           this.captchaInfo.captchaValue.toLowerCase() === value.toLowerCase()
       ),
     },
-  };
+  }
   constructor() {
-    const reactThis = reactive(this);
-    console.log(reactive({ aa: useVuelidate(reactThis.rules, reactThis) }));
-
+    const reactThis = reactive(this)
     this.$v = (useVuelidate(reactThis.rules, reactThis) as any) as Validation<
-      LoginFormState["rules"],
+      LoginFormState['rules'],
       LoginFormState
-    >;
-    return reactThis;
+    >
+    return reactThis
   }
 }
 
-export { LoginFormState };
+export { LoginFormState }

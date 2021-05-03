@@ -27,41 +27,41 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRef, ref, watch } from "vue";
-import { Captcha } from "@/network/getCaptcha";
-import { Validation } from "@vuelidate/core";
-import { debounce } from "lodash";
+import { defineComponent, toRef, ref, watch } from 'vue'
+import { Captcha } from '@/network/getCaptcha'
+import { Validation } from '@vuelidate/core'
+import { debounce } from 'lodash'
 export default defineComponent({
-  name: "VerifyInput",
+  name: 'VerifyInput',
   props: {
-    title: { type: String, default: "验证码" },
-    errTittle: { type: String, default: "验证码错误" },
-    placeholder: { type: String, default: "请输入验证码" },
+    title: { type: String, default: '验证码' },
+    errTittle: { type: String, default: '验证码错误' },
+    placeholder: { type: String, default: '请输入验证码' },
     v: { type: Object, required: true },
     formStates: { default: {} },
-    property: { type: String, default: "1" },
+    property: { type: String, default: '1' },
     captcha: { type: Object },
   },
   // eslint-disable-next-line vue/no-setup-props-destructure
   setup({ captcha, v, formStates, property }) {
-    const captchaDate = captcha as Captcha;
-    const v$ = v as Validation;
-    const formState = toRef(formStates, property as never);
-    const errMessage = ref("");
+    const captchaDate = captcha as Captcha
+    const v$ = v as Validation
+    const formState = toRef(formStates, property as never)
+    const errMessage = ref('')
     //避免错误消息的闪烁，对错误消息的更新进行防抖，仅接受最后一次进行更新
     const setErrMsg = debounce(
       (value: any) => (errMessage.value = value),
       400,
       { trailing: true }
-    );
+    )
     watch(
       () => v$.$errors,
-      () => (v$.$error ? setErrMsg(v$.$errors[0].$message) : setErrMsg(""))
-    );
-    return { captchaDate, v$, errMessage, formState };
+      () => (v$.$error ? setErrMsg(v$.$errors[0].$message) : setErrMsg(''))
+    )
+    return { captchaDate, v$, errMessage, formState }
   },
   components: {},
-});
+})
 </script>
 
 <style lang="scss" scope>
