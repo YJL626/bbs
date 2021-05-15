@@ -1,17 +1,13 @@
 <template>
   <div class="box">
     <div class="verify-container">
-      <el-input
-        :placeholder="placeholder"
-        v-model="formState"
-        @blur="v$.$touch"
-      >
+      <el-input :placeholder="placeholder" v-model="v$.$model">
         <template #prepend>{{ title }}</template>
       </el-input>
       <div
         class="captcha-container"
-        @click="captchaDate.refresh"
-        v-html="captchaDate.captchaHtml"
+        @click="captcha.refresh"
+        v-html="captcha.captchaHtml"
       ></div>
       <br />
     </div>
@@ -27,8 +23,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRef, ref, watch } from 'vue'
-import { Captcha } from '@/network/getCaptcha'
+import { defineComponent, ref, watch } from 'vue'
+import { Captcha } from '@/network/userPage/getCaptcha'
 import { Validation } from '@vuelidate/core'
 import { debounce } from 'lodash'
 export default defineComponent({
@@ -38,15 +34,10 @@ export default defineComponent({
     errTittle: { type: String, default: '验证码错误' },
     placeholder: { type: String, default: '请输入验证码' },
     v: { type: Object, required: true },
-    formStates: { default: {} },
-    property: { type: String, default: '1' },
-    captcha: { type: Object },
+    captcha: { type: Captcha, required: true },
   },
-  // eslint-disable-next-line vue/no-setup-props-destructure
-  setup({ captcha, v, formStates, property }) {
-    const captchaDate = captcha as Captcha
-    const v$ = v as Validation
-    const formState = toRef(formStates, property as never)
+  setup(props) {
+    const v$ = props.v as Validation
     const errMessage = ref('')
     //避免错误消息的闪烁，对错误消息的更新进行防抖，仅接受最后一次进行更新
     const setErrMsg = debounce(
@@ -58,7 +49,7 @@ export default defineComponent({
       () => v$.$errors,
       () => (v$.$error ? setErrMsg(v$.$errors[0].$message) : setErrMsg(''))
     )
-    return { captchaDate, v$, errMessage, formState }
+    return { v$, errMessage }
   },
   components: {},
 })

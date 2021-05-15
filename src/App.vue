@@ -7,14 +7,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue-demi'
 import NavHeader from '@/views/NavHeader/NavHeader.vue'
+
 export default defineComponent({
-  name: 'App',
   setup() {
     return {}
   },
-  components: { NavHeader },
+  components: {
+    NavHeader,
+  },
 })
 </script>
 

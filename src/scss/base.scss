@@ -15,8 +15,12 @@ body {
 
 }
 
-* {
-  color: $base-font-color;
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-none {
+  cursor: none;
 }
 
 .router-link {

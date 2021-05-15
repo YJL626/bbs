@@ -1,4 +1,4 @@
-import { mAxios } from '@/network'
+import { req } from '@/network'
 import {
   email as email1,
   required as required1,
@@ -22,7 +22,7 @@ const hasWord = helpers.withMessage('必须含有字母', (value) =>
 const checkMailboxExist = helpers.withMessage('邮箱已存在', (async (
   email: string
 ) => {
-  const result = await mAxios
+  const result = await req
     .get('/check/email', { params: { email } })
     .catch(() => '')
   return result ? true : false
@@ -30,7 +30,7 @@ const checkMailboxExist = helpers.withMessage('邮箱已存在', (async (
 const checkUserNameExist = helpers.withMessage('用户名已存在', (async (
   name: string
 ) => {
-  const result = await mAxios
+  const result = await req
     .get('/check/name', { params: { name } })
     .catch(() => '')
   return result ? true : false
